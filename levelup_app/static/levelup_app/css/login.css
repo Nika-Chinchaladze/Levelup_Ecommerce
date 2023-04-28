@@ -1,0 +1,17 @@
+body {
+    background-color: #d6ece5;
+}
+form {
+    margin: auto;
+}
+form input {
+    margin: 20px 0;
+    border: 1px solid #1b1b1bda!important;
+}
+.errorlist {
+    list-style: none;
+}
+.errorlist li {
+    text-align: left;
+    color: red;
+}

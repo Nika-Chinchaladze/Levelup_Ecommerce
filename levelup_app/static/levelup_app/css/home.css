@@ -1,0 +1,30 @@
+body {
+    background-color: #d6ece5;
+}
+.image-div {
+    width: 130px;
+    height: 130px;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #cecbcb;
+    border: 2px solid #0c3629;
+    border-radius: 50%;
+    margin: 30px auto 0;
+}
+.info-div {
+    background-color: #1d473a;
+    color: white;
+    padding: 15px 0;
+    margin-top: 30px;
+}
+.info-div a {
+    text-decoration: none;
+    color: white;
+}
+.info-div a:hover {
+    color: gold;
+}
+h5 {
+    color: #1a1296;
+}

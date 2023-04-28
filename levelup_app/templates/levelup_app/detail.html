@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Product Detail Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/detail.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <h3 class="text-center mt-3 mb-3">Product Detail Page</h3>
+    <hr>
+    <div id="product-div">
+        <h4 class="text-center m-0">{{ product.name }}</h4>
+        <img src="{{ product.image.url }}" alt="product-image">
+
+        <table class="text-center m-0 mt-2">
+            <thead>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </thead>
+            <tbody>
+                <td>{{ product.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>${{ product.price|floatformat:2 }}</td>
+            </tbody>
+        </table>
+
+        <hr class="m-1">
+        <div class="d-flex justify-content-around align-items-center">
+            <a href="#" class="btn btn-secondary">Save</a>
+            <a href="#" class="btn btn-primary">Order</a>
+        </div>
+    </div>
+{% endblock content %}

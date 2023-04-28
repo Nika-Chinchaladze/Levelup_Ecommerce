@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+nav {
+    box-sizing: border-box;
+    padding: 10px 50px;
+    background-color: #358067c7;
+}
+nav h3 {
+    color: #f8f7f4;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+}
+nav a:hover {
+    color: gold;
+}

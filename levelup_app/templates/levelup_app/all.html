@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Products Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/all.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <h3 class="text-center mt-5 mb-4">All Products Page</h3>
+    <div class="row text-center row-div">
+        {% for product in products %}
+            <div class="product-div">
+                <img src="{{ product.image.url }}" alt="product-image">
+                
+                <p class="d-flex justify-content-between align-items-center m-0 ps-3 pe-3">
+                    <span>Product:&nbsp;&nbsp; <strong>{{ product.name }}</strong></span>
+                    <a href="#" class="btn btn-outline-secondary">Save</a>
+                </p>
+                <p class="d-flex justify-content-between align-items-center m-0 ps-3 pe-3">
+                    <span>Quantity:&nbsp;&nbsp; <strong>{{ product.quantity }}</strong></span>
+                    <a href="{% url 'detail' pk=product.id %}" class="btn btn-outline-success">View</a>
+                </p>
+                <p class="d-flex justify-content-between align-items-center m-0 ps-3 pe-3">
+                    <span>Price:&nbsp;&nbsp; <strong>${{ product.price|floatformat:2 }}</strong></span>
+                    <a href="#" class="btn btn-outline-primary">Order</a>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

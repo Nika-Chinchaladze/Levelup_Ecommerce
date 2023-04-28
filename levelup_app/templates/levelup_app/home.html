@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Home Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/home.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <div>
+        <!-- personal information -->
+        {% if user.user_image.image.url %}
+            <div class="image-div" style="background-image: url('{{ user.user_image.image.url }}');"></div>
+        {% else %}
+            <div class="image-div" style="background-image: url({% static 'levelup_app/images/user.png' %});"></div>
+        {% endif %}
+        
+        <h4 class="text-center mt-2">{{ user.first_name }} {{ user.last_name }} - "{{ user.username }}"</h4>
+        {% if user.is_superuser %}
+          <h5 class="text-center fw-bold mt-2">Administrator</h5>
+        {% endif %}
+        <!-- calculation links -->
+        <div class="d-flex justify-content-around align-items-center info-div">
+            {% if user.is_superuser %}
+                <a href="#">Check Statistics</a>
+                <a href="#">Add New Product</a>
+            {% else %}
+                <a href="#">Bought Products</a>
+                <a href="#">Saved Products</a>
+                <a href="#">My Credit Card</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
