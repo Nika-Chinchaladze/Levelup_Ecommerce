@@ -16,6 +16,8 @@ hr {
 .product-div img {
     width: 100px;
     height: auto;
+    border: 1px dotted #3a3939b4;
+    border-radius: 5px;
 }
 .product-div table {
     width: 350px;
