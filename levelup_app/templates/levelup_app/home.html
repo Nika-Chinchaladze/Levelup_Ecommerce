@@ -31,7 +31,7 @@
             {% else %}
                 <a href="{% url 'saved' %}">Saved Products</a>
                 <a href="#">Purchased Products</a>
-                <a href="#">My Credit Card</a>
+                <a href="{% url 'credit-card' %}">My Card</a>
                 <a href="{% url 'update-image' %}">Update Profile Image</a>
             {% endif %}
         </div>

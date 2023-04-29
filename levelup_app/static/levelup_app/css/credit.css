@@ -1,0 +1,40 @@
+body {
+    background-color: #d6ece5;
+}
+hr {
+    width: 90%;
+    margin: auto;
+}
+#credit-div {
+    box-sizing: border-box;
+    width: 50%;
+    padding: 10px 15px;
+    border: 2px solid #636161;
+    border-radius: 8px;
+    margin: 30px auto;
+}
+#credit-div button {
+    width: 150px;
+}
+#credit-div form input {
+    margin-bottom: 20px;
+}
+#registered-card {
+    box-sizing: border-box;
+    margin: 0 auto 50px;
+    width: 40%;
+    height: 300px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
+}
+#info-div {
+    position: relative;
+    top: 200px;
+}
+#info-div p {
+    letter-spacing: 2px;
+}

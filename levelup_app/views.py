@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 
-from .forms import LoginForm, RegisterForm, UserImageForm
-from .models import UserImage, Product, SavedProduct
+from .forms import LoginForm, RegisterForm, UserImageForm, UserCreditCardForm, PurchasePtoductForm
+from .models import UserImage, Product, SavedProduct, UserCreditCard
 # Create your views here.
 
 
@@ -74,6 +74,24 @@ class HomeView(View):
         return render(request, "levelup_app/home.html", context)
 
 
+class CreditCardView(View):
+    def get(self, request):
+        context = {
+            "user": request.user,
+            "form": UserCreditCardForm(),
+            "card": UserCreditCard.objects.filter(user=request.user).first()
+        }
+        return render(request, "levelup_app/credit.html", context)
+
+    def post(self, request):
+        form = UserCreditCardForm(request.POST)
+        if form.is_valid():
+            form_instance = form.save(commit=False)
+            form_instance.user = request.user
+            form_instance.save()
+            return HttpResponseRedirect(reverse("credit-card"))
+
+
 class UpdateProfileImageView(View):
     def get(self, request):
         context = {
@@ -136,3 +154,16 @@ class RemoveFromCartView(View):
         saved_product = SavedProduct.objects.get(id=pk)
         saved_product.delete()
         return HttpResponseRedirect(reverse("saved"))
+
+
+class OrderProductView(View):
+    def get(self, request, pk):
+        context = {
+            "user": request.user,
+            "product": Product.objects.get(id=pk),
+            "form": PurchasePtoductForm()
+        }
+        return render(request, "levelup_app/order.html", context)
+
+    def post(self, request):
+        pass

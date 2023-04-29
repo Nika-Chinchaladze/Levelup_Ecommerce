@@ -1,0 +1,51 @@
+body {
+    background-color: #d6ece5;
+}
+hr {
+    width: 90%;
+    margin: auto;
+}
+.product-div, .credit-div, .buy-div {
+    box-sizing: border-box;
+    width: 70%;
+    padding: 10px 15px;
+    margin: 30px auto;
+    border: 2px solid #646363da;
+    border-radius: 7px;
+}
+.product-div img {
+    width: 100px;
+    height: auto;
+}
+.product-div table {
+    width: 350px;
+    margin: 0 20px;
+    border-radius: 10px;
+    border: 1px solid #313030e1;
+    text-align: center;
+}
+.product-div table th {
+    border-bottom: 1px dashed #313030e1;
+}
+.credit-div table {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+.credit-div table tbody,
+.credit-div table thead {
+    margin: 10px 0;
+}
+.credit-div table img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid wheat;
+}
+.buy-div form input {
+    border: 1px solid #383737e0;
+    margin-bottom: 10px; 
+}
+.buy-line {
+    width: 100%;
+}

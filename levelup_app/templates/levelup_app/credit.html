@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Credit Card Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/credit.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <h3 class="text-center mt-5 mb-4">MasterCard Page</h3>
+    <hr>
+    <div id="credit-div">
+        <form action="{% url 'credit-card' %}" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field }}
+                {{ field.errors }}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+    </div>
+    <hr>
+    <h5 class="text-center mt-4 mb-4">Registered MasterCard</h5>
+    {% if card %}
+        <div id="registered-card" style="background-image: url('{% static 'levelup_app/images/card.png' %}');">
+            <div id="info-div">
+                <p class="m-0 ps-4"><strong>{{ card.card_number }}</strong></p>
+                <p class="m-0 ps-4"><strong>{{ card.expire_date }}</strong></p>
+                <p class="m-0 ps-4"><strong>{{ card.name_on_card }}</strong></p>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center text-danger fw-bold">No MasterCard is registered, please register one!</p>
+    {% endif %}
+{% endblock content %}

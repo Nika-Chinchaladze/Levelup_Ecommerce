@@ -33,7 +33,7 @@
         <hr class="m-1">
         <div class="d-flex justify-content-around align-items-center">
             <a href="{% if user.is_authenticated %}{% url 'save-in-cart' pk=product.id %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-secondary">Save Product To Cart ~ <strong><i class="bi bi-cart-check"></i></strong></a>
-            <a href="{% if user.is_authenticated %}{% url 'home' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary">Order Product ~ <strong><i class="bi bi-bag-heart-fill"></i></strong></a>
+            <a href="{% if user.is_authenticated %}{% url 'order' pk=product.id %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary">Order Product ~ <strong><i class="bi bi-bag-heart-fill"></i></strong></a>
         </div>
     </div>
 {% endblock content %}

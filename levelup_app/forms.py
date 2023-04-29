@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserImage
+
+from .models import UserImage, UserCreditCard, PurchasedProduct
 
 
 class LoginForm(forms.Form):
@@ -60,3 +61,41 @@ class UserImageForm(forms.ModelForm):
         super(UserImageForm, self).__init__(*args, **kwargs)
 
         self.fields["image"].label = ""
+
+
+class UserCreditCardForm(forms.ModelForm):
+    class Meta:
+        model = UserCreditCard
+        exclude = ("user",)
+
+    def __init__(self, *args, **kwargs):
+        super(UserCreditCardForm, self).__init__(*args, **kwargs)
+
+        self.fields["name_on_card"].label = ""
+        self.fields["card_number"].label = ""
+        self.fields["expire_date"].label = ""
+        self.fields["cvc_cvv"].label = ""
+
+        self.fields["name_on_card"].widget.attrs["placeholder"] = "Name on card"
+        self.fields["card_number"].widget.attrs["placeholder"] = "1234 5678 1234 5678"
+        self.fields["expire_date"].widget.attrs["placeholder"] = "YYYY-MM-DD"
+        self.fields["cvc_cvv"].widget.attrs["placeholder"] = "CVC"
+
+        self.fields["name_on_card"].widget.attrs["class"] = "form-control"
+        self.fields["card_number"].widget.attrs["class"] = "form-control"
+        self.fields["expire_date"].widget.attrs["class"] = "form-control"
+        self.fields["cvc_cvv"].widget.attrs["class"] = "form-control"
+
+
+class PurchasePtoductForm(forms.ModelForm):
+    class Meta:
+        model = PurchasedProduct
+        fields = ("quantity",)
+
+    def __init__(self, *args, **kwargs):
+        super(PurchasePtoductForm, self).__init__(*args, **kwargs)
+
+        self.fields["quantity"].label = ""
+
+        self.fields["quantity"].widget.attrs["placeholder"] = "Quantity"
+        self.fields["quantity"].widget.attrs["class"] = "form-control"
