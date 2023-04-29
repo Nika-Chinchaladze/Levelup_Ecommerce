@@ -14,7 +14,7 @@ nav h3 {
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 5px;
+    margin: 0 15px;
 }
 nav a:hover {
     color: gold;

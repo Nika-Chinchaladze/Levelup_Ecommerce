@@ -21,3 +21,12 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.price} {self.quantity}"
+
+
+class SavedProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    date_saved = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} {self.product.name} {self.date_saved}"

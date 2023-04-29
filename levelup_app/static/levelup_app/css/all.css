@@ -16,9 +16,9 @@ body {
     border-radius: 7px;
     background-color: #d4dddade;
 }
-.product-div p a {
-    width: 100px;
-    margin: 2px 0;
+.product-div a {
+    width: 98%;
+    margin: 2px 0 5px;
 }
 img {
     width: 100%;

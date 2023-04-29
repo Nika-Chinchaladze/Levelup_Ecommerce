@@ -29,9 +29,10 @@
                 <a href="#">Check Statistics</a>
                 <a href="#">Add New Product</a>
             {% else %}
-                <a href="#">Bought Products</a>
-                <a href="#">Saved Products</a>
+                <a href="{% url 'saved' %}">Saved Products</a>
+                <a href="#">Purchased Products</a>
                 <a href="#">My Credit Card</a>
+                <a href="{% url 'update-image' %}">Update Profile Image</a>
             {% endif %}
         </div>
     </div>

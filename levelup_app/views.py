@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 
-from .forms import LoginForm, RegisterForm
-from .models import UserImage, Product
+from .forms import LoginForm, RegisterForm, UserImageForm
+from .models import UserImage, Product, SavedProduct
 # Create your views here.
 
 
@@ -74,6 +74,22 @@ class HomeView(View):
         return render(request, "levelup_app/home.html", context)
 
 
+class UpdateProfileImageView(View):
+    def get(self, request):
+        context = {
+            "form": UserImageForm()
+        }
+        return render(request, "levelup_app/image.html", context)
+
+    def post(self, request):
+        form = UserImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form_instance = form.save(commit=False)
+            form_instance.user = request.user
+            form_instance.save()
+            return HttpResponseRedirect(reverse("home"))
+
+
 class AllProductView(View):
     def get(self, request):
         context = {
@@ -90,3 +106,33 @@ class ProductDetailView(View):
             "product": Product.objects.get(id=pk)
         }
         return render(request, "levelup_app/detail.html", context)
+
+
+class SavedProductView(View):
+    def get(self, request):
+        context = {
+            "user": request.user,
+            "saved_products": SavedProduct.objects.filter(user=request.user).all()
+        }
+        return render(request, "levelup_app/saved.html", context)
+
+
+class SaveIntoCartView(View):
+    def get(self, request, pk):
+        chosen_product = Product.objects.get(id=pk)
+        check_product = SavedProduct.objects.filter(
+            product=chosen_product).first()
+        if check_product is None:
+            saved_product = SavedProduct(
+                product=Product.objects.get(id=pk),
+                user=request.user
+            )
+            saved_product.save()
+        return HttpResponseRedirect(reverse("saved"))
+
+
+class RemoveFromCartView(View):
+    def get(self, request, pk):
+        saved_product = SavedProduct.objects.get(id=pk)
+        saved_product.delete()
+        return HttpResponseRedirect(reverse("saved"))

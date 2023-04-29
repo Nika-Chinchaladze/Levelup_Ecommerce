@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import UserImage
 
 
 class LoginForm(forms.Form):
@@ -48,3 +49,14 @@ class RegisterForm(UserCreationForm):
         self.fields["username"].max_length = 150
         self.fields["password1"].max_length = 150
         self.fields["password2"].max_length = 150
+
+
+class UserImageForm(forms.ModelForm):
+    class Meta:
+        model = UserImage
+        fields = ("image",)
+
+    def __init__(self, *args, **kwargs):
+        super(UserImageForm, self).__init__(*args, **kwargs)
+
+        self.fields["image"].label = ""
