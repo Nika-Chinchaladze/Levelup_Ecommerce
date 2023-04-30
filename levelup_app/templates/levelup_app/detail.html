@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load poll_extras %}
 
 <!-- Title Block -->
 {% block title %}Product Detail Page{% endblock title %}
@@ -33,7 +34,12 @@
         <hr class="m-1">
         <div class="d-flex justify-content-around align-items-center">
             <a href="{% if user.is_authenticated %}{% url 'save-in-cart' pk=product.id %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-secondary">Save Product To Cart ~ <strong><i class="bi bi-cart-check"></i></strong></a>
-            <a href="{% if user.is_authenticated %}{% url 'order' pk=product.id %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary">Order Product ~ <strong><i class="bi bi-bag-heart-fill"></i></strong></a>
+            {% if product.quantity|greater_than %}
+                <a href="{% if user.is_authenticated %}{% url 'order' pk=product.id %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary">Order Product ~ <strong><i class="bi bi-bag-heart-fill"></i></strong></a>
+            {% else %}
+                <button class="btn btn-danger">Not In Selling Anymore ~ <strong><i class="bi bi-sign-do-not-enter-fill"></i></strong></button>
+            {% endif %}
+            
         </div>
     </div>
 {% endblock content %}

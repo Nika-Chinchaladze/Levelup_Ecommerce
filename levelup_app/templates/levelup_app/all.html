@@ -19,7 +19,7 @@
                 
                 <p class="text-start m-0 mt-2 ps-2 pe-3">Name:&nbsp;&nbsp; <strong>{{ product.name }}</strong></p>
                 <p class="text-start m-0 ps-2 pe-3">Quantity:&nbsp;&nbsp; <strong>{{ product.quantity }}</strong></p>
-                <p class="text-start m-0 ps-2 pe-3">Price:&nbsp;&nbsp; <strong>{{ product.price|floatformat:2 }}</strong></p>
+                <p class="text-start m-0 ps-2 pe-3">Price:&nbsp;&nbsp; <strong>${{ product.price|floatformat:2 }}</strong></p>
                 <a href="{% url 'detail' pk=product.id %}" class="btn btn-outline-success">View Product</a>
                 
             </div>

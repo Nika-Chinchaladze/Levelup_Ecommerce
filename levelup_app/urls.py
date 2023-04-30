@@ -12,6 +12,7 @@ urlpatterns = [
     path("credit-card", views.CreditCardView.as_view(), name="credit-card"),
     path("detail/<int:pk>", views.ProductDetailView.as_view(), name="detail"),
     path("saved", views.SavedProductView.as_view(), name="saved"),
+    path("purchased", views.PurchasedProductsView.as_view(), name="purchased"),
     path("save-in-cart/<int:pk>",
          views.SaveIntoCartView.as_view(), name="save-in-cart"),
     path("remove-from-cart/<int:pk>",

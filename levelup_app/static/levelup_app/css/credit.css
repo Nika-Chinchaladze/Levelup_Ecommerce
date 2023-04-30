@@ -38,3 +38,17 @@ hr {
 #info-div p {
     letter-spacing: 2px;
 }
+#balance {
+    box-sizing: border-box;
+    width: 200px;
+    border-radius: 10px;
+    border: 2px solid #494848b9;
+    margin: 0 auto 50px;
+    padding: 20px 0;
+    background-color: #214438;
+    color: white;
+    cursor: pointer;
+}
+#balance:hover {
+    background-color: #3b725f;
+}

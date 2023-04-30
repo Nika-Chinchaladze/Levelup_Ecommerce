@@ -18,15 +18,15 @@
         <h5 class="text-start fw-bold mb-4">Order Details</h5>
         <div class="d-flex justify-content-start align-items-start">
             <img src="{{ product.image.url }}" alt="product-image">
-            <table>
+            <table id="order-table">
                 <thead>
-                    <th>Name</th>
+                    <th>Product Name</th>
                     <th>Total Quantity</th>
                     <th>Price</th>
                 </thead>
                 <tbody>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.quantity }}</td>
+                    <td id="total-quantity">{{ product.quantity }}</td>
                     <td>$<span id="product_price">{{ product.price }}</span></td>
                 </tbody>
             </table>
@@ -42,15 +42,21 @@
                     <th>Name on Card</th>
                     <th>Card number</th>
                     <th>Expiration date</th>
+                    <th>Balance</th>
                 </thead>
                 <tbody>
                     <td><img src="{% static 'levelup_app/images/card.png' %}" alt="card-image"></td>
                     <td>{{ user.usercreditcard.name_on_card }}</td>
                     <td>{{ user.usercreditcard.card_number|last_four }}</td>
                     <td>{{ user.usercreditcard.expire_date }}</td>
+                    <td>$ <span id="current-balance">{{ user.usercreditcard.creditcardmoney.money|floatformat:2 }}</span></td>
                 </tbody>
             </table>
         {% endif %}
+    </div>
+
+    <div id="alert-div" class="alert alert-danger" role="alert">
+        <strong>Error Message!</strong> <span id="error-message"></span>
     </div>
 
     <div class="buy-div">
@@ -60,14 +66,14 @@
             <span>Summary</span>
             <span><strong>Total Price:</strong> $<b id="total_price">0</b></span>
         </h6>
-        <form action="#" class="text-center">
+        <form action="{% url 'order' pk=product.id %}" method="POST" class="text-center">
             {% csrf_token %}
             {% for field in form %}
                 {{ field }}
                 {{ field.errors }}
             {% endfor %}
             <input type="hidden" name="hidden_total_price" id="hidden_total_price" value="0">
-            <button class="btn btn-primary">Complete Checkout</button>
+            <button type="submit" id="checkout-button">Complete Checkout</button>
         </form>
     </div>
 {% endblock content %}

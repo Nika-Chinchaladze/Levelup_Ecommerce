@@ -21,3 +21,7 @@ hr {
     border-top: 1px dashed #1b1b1bea;
     border-bottom: 1px dashed #1b1b1bea;
 }
+.product-div div button:active {
+    position: relative;
+    top: 2px;
+}

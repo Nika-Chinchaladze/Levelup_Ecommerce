@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load poll_extras %}
 
 <!-- Title Block -->
 {% block title %}Home Page{% endblock title %}
@@ -25,15 +26,72 @@
         {% endif %}
         <!-- calculation links -->
         <div class="d-flex justify-content-around align-items-center info-div">
-            {% if user.is_superuser %}
-                <a href="#">Check Statistics</a>
-                <a href="#">Add New Product</a>
-            {% else %}
-                <a href="{% url 'saved' %}">Saved Products</a>
-                <a href="#">Purchased Products</a>
-                <a href="{% url 'credit-card' %}">My Card</a>
-                <a href="{% url 'update-image' %}">Update Profile Image</a>
-            {% endif %}
+            <a href="{% url 'saved' %}">Saved Products</a>
+            <a href="{% url 'purchased' %}">Purchased Products</a>
+            <a href="{% url 'credit-card' %}">My Card</a>
+            <a href="{% url 'update-image' %}">Update Profile Image</a>
         </div>
     </div>
+    <hr>
+    <h4 class="text-center mt-4 mb-4">
+        Desired Information &nbsp; <i class="bi bi-info-circle-fill text-primary"></i> &nbsp; Statistics
+    </h4>
+    <!-- Tabs Section -->
+    <div id="tab-div">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Get Quantity of Product</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Get Average Price</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+        </div>
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        <!-- GET QUANTITY OF PRODUCT -->
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            <!-- Search Bar -->
+            <div class="searchDiv">
+                <!-- Search Bar Component -->
+                <form action="#">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="" id="searchProduct" placeholder="Search Products" onkeyup="filterProducts()">
+                </form>
+            </div>
+            <!-- Products -->
+            <ul class="text-center quantity-list" id="myList">
+                {% for product in products %}
+                    <li class="actualProduct">
+                        <img src="{{ product.image.url }}" alt="">
+                        <span class="product-heading">{{ product.name }}</span>
+                        <span>{{ product.quantity }}
+                            {% if product.quantity|greater_than %}
+                                <i class="bi bi-bag-check-fill text-success"></i>
+                            {% else %}
+                                <i class="bi bi-bag-x-fill text-danger"></i>
+                            {% endif %}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- GET AVERAGE PRICE -->
+        <div class="tab-pane fade text-center" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <div id="avg-div">
+                <ul>
+                    {% for product in product_avg_prices %}
+                        <li>
+                            <img src="{{ product.product|product_image }}" alt="product-image">
+                            <span>{{ product.product|product_name }}</span>
+                            <span><strong>$ {{ product.avg_money }}</strong></span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
+    </div>
 {% endblock content %}
+
+<!-- JavaScript Block -->
+{% block javascript %}
+    <script src="{% static 'levelup_app/javascript/home.js' %}"></script>
+{% endblock javascript %}

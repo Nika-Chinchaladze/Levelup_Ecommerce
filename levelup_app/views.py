@@ -4,9 +4,11 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
+from django.contrib.auth.models import User
+from django.db.models import Avg, Sum, Count
 
 from .forms import LoginForm, RegisterForm, UserImageForm, UserCreditCardForm, PurchasePtoductForm
-from .models import UserImage, Product, SavedProduct, UserCreditCard
+from .models import Product, SavedProduct, UserCreditCard, PurchasedProduct
 # Create your views here.
 
 
@@ -70,7 +72,11 @@ class LogoutView(View):
 
 class HomeView(View):
     def get(self, request):
-        context = {"user": request.user}
+        context = {
+            "user": request.user,
+            "products": Product.objects.all().order_by("-quantity"),
+            "product_avg_prices": PurchasedProduct.objects.values("product").annotate(avg_money=Sum("money_spent")/Sum("quantity")).all()
+        }
         return render(request, "levelup_app/home.html", context)
 
 
@@ -165,5 +171,38 @@ class OrderProductView(View):
         }
         return render(request, "levelup_app/order.html", context)
 
-    def post(self, request):
-        pass
+    def post(self, request, pk):
+        form = PurchasePtoductForm(request.POST)
+        if form.is_valid():
+            bougth_product = Product.objects.get(id=pk)
+            customer_user = User.objects.get(id=request.user.id)
+            # save purchased product into PurchasedProduct Model
+            form_instance = form.save(commit=False)
+            form_instance.user = customer_user
+            form_instance.product = bougth_product
+            form_instance.money_spent = request.POST["hidden_total_price"]
+            form_instance.save()
+            # decrease products total quantity
+            bougth_product.quantity -= int(form.cleaned_data["quantity"])
+            bougth_product.save()
+            # decrease customer's balance on mastercard
+            customer_money = customer_user.usercreditcard.creditcardmoney
+            customer_money.money -= float(request.POST["hidden_total_price"])
+            customer_money.save()
+            return HttpResponseRedirect(reverse("home"))
+        else:
+            context = {
+                "user": request.user,
+                "product": Product.objects.get(id=pk),
+                "form": PurchasePtoductForm()
+            }
+            return render(request, "levelup_app/order.html", context)
+
+
+class PurchasedProductsView(View):
+    def get(self, request):
+        context = {
+            "user": request.user,
+            "products": PurchasedProduct.objects.filter(user=request.user).all()
+        }
+        return render(request, "levelup_app/purchased.html", context)

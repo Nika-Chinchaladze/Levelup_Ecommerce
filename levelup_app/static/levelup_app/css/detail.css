@@ -23,9 +23,14 @@ body {
     border-bottom: 1px dashed #1b1b1ba9;
     border-top: 1px dashed #1b1b1ba9;
 }
-#product-div div a {
+#product-div div a,
+#product-div div button {
     width: 250px;
     margin: 3px 0 7px;
+}
+#product-div div button:active {
+    position: relative;
+    top: 2px;
 }
 table {
     width: 100%;

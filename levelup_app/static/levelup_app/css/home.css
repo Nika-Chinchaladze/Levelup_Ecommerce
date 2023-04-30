@@ -13,10 +13,13 @@ body {
     margin: 30px auto 0;
 }
 .info-div {
+    box-sizing: border-box;
+    width: 90%;
     background-color: #1d473a;
     color: white;
     padding: 15px 0;
-    margin-top: 30px;
+    margin: 30px auto;
+    border-radius: 10px;
 }
 .info-div a {
     text-decoration: none;
@@ -27,4 +30,86 @@ body {
 }
 h5 {
     color: #1a1296;
+}
+hr {
+    width: 90%;
+    margin: 30px auto;
+}
+.quantity-list {
+    list-style: none;
+    margin-bottom: 70px;
+}
+.quantity-list li {
+    width: 350px;
+    padding: 30px 10px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.quantity-list li img {
+    display: inline-block;
+    width: 70px;
+    height: 50px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.searchDiv {
+    box-sizing: border-box;
+    width: 35%;
+    background-color: #fff;
+    border: 2px solid #33235f;
+    border-radius: 10px;
+    margin: 30px auto;
+    padding: 10px;
+}
+.searchDiv form {
+    width: 100%;
+    border: 1px solid #fff;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.searchDiv form input {
+    border-style: none;
+    outline: none;
+    box-shadow: none;
+    width: 80%;
+    font-weight: bold;
+}
+.searchDiv form i {
+    box-sizing: border-box;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+.actualProduct {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#tab-div,
+#nav-tabContent {
+    width: 90%;
+    margin: auto;
+}
+#avg-div ul {
+    list-style: none;
+}
+#avg-div ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    margin: 30px auto 50px;
+    padding: 10px;
+    width: 400px;
+    border-radius: 10px;
+}
+#avg-div img {
+    width: 130px;
+    height: 70px;
+    border: 1px dashed #575555;
+    border-radius: 8px;
 }

@@ -36,4 +36,7 @@
     {% else %}
         <p class="text-center text-danger fw-bold">No MasterCard is registered, please register one!</p>
     {% endif %}
+    <hr>
+    <h5 class="text-center mt-4 mb-4">Current Balance on MasterCard</h5>
+    <p class="text-center" id="balance">Balance:&nbsp;&nbsp; ${{ card.creditcardmoney.money|floatformat:2 }}</p>
 {% endblock content %}

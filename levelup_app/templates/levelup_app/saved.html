@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load poll_extras %}
 
 <!-- Title Block -->
 {% block title %}Saved Products Page{% endblock title %}
@@ -21,7 +22,11 @@
             <p class="text-start m-0 mt-2 ps-2">Price:&nbsp;&nbsp; <strong>${{ item.product.price }}</strong></p>
             <hr>
             <div class="text-center">
-                <a class="btn btn-primary m-2" href="{% url 'order' pk=item.product.id %}">Order Product ~ <strong><i class="bi bi-bag-heart-fill"></i></strong></a>
+                {% if item.product.quantity|greater_than %}
+                    <a href="{% if user.is_authenticated %}{% url 'order' pk=item.product.id %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary">Order Product ~ <strong><i class="bi bi-bag-heart-fill"></i></strong></a>
+                {% else %}
+                    <button class="btn btn-warning">Not In Selling Anymore <strong><i class="bi bi-sign-do-not-enter-fill"></i></strong></button>
+                {% endif %}
                 <a class="btn btn-danger m-2" href="{% url 'remove-from-cart' pk=item.id %}">Remove Product ~ <strong><i class="bi bi-trash3-fill"></i></strong></a>
             </div>
         </div>

@@ -19,16 +19,21 @@ hr {
     border: 1px dotted #3a3939b4;
     border-radius: 5px;
 }
-.product-div table {
-    width: 350px;
+#order-table {
+    width: 100%;
     margin: 0 20px;
-    border-radius: 10px;
-    border: 1px solid #313030e1;
+    border-radius: 10px!important;
     text-align: center;
 }
-.product-div table th {
-    border-bottom: 1px dashed #313030e1;
+#order-table th {
+    background-color: #37378bcb;
+    color: white;
 }
+#order-table th,
+#order-table td {
+    border: 1px solid #0d0d55cb;
+}
+
 .credit-div table {
     width: 90%;
     margin: auto;
@@ -50,4 +55,23 @@ hr {
 }
 .buy-line {
     width: 100%;
+}
+#checkout-button {
+    background-color: #115474;
+    color: white;
+    border-radius: 5px;
+    border: 2px solid #115474;
+    padding: 7px 15px;
+}
+#checkout-button:hover {
+    background-color: #2b5d74;
+}
+#checkout-button:active {
+    position: relative;
+    top: 2px;
+}
+#alert-div {
+    width: 70%;
+    margin: auto;
+    display: none;
 }
