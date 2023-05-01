@@ -72,10 +72,13 @@ class LogoutView(View):
 
 class HomeView(View):
     def get(self, request):
+        all_products = Product.objects.all()
         context = {
             "user": request.user,
-            "products": Product.objects.all().order_by("-quantity"),
-            "product_avg_prices": PurchasedProduct.objects.values("product").annotate(avg_money=Sum("money_spent")/Sum("quantity")).all()
+            "products": all_products.order_by("-quantity"),
+            "product_avg_prices": PurchasedProduct.objects.values("product").annotate(avg_money=Sum("money_spent")/Sum("quantity")).all(),
+            "fewest_product": all_products.order_by("quantity")[0],
+            "most_popular_product": PurchasedProduct.objects.values("product").annotate(total_quantity=Sum("quantity")).all().order_by("-total_quantity")[0]
         }
         return render(request, "levelup_app/home.html", context)
 

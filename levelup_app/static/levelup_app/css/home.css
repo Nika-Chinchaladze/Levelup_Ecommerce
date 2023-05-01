@@ -113,3 +113,20 @@ hr {
     border: 1px dashed #575555;
     border-radius: 8px;
 }
+#fewest-product, #most-popular-product {
+    box-sizing: border-box;
+    width: 500px;
+    margin: 50px auto;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#fewest-product img, #most-popular-product img {
+    width: 130px;
+    height: 100px;
+    border-radius: 10px;
+    border: 1px dashed #636161c9;
+}

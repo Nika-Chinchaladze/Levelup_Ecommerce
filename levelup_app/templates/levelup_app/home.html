@@ -40,14 +40,14 @@
     <div id="tab-div">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Get Quantity of Product</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Get Average Price</button>
-            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Get Product's Average Price</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Get Fewest Product</button>
+            <button class="nav-link" id="nav-popular-tab" data-bs-toggle="tab" data-bs-target="#nav-popular" type="button" role="tab" aria-controls="nav-popular" aria-selected="false">Get Most Popular Product</button>
         </div>
     </div>
     <div class="tab-content" id="nav-tabContent">
         <!-- GET QUANTITY OF PRODUCT -->
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-            <!-- Search Bar -->
             <div class="searchDiv">
                 <!-- Search Bar Component -->
                 <form action="#">
@@ -75,19 +75,49 @@
 
         <!-- GET AVERAGE PRICE -->
         <div class="tab-pane fade text-center" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <div class="searchDiv">
+                <!-- Search Bar Component -->
+                <form action="#">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="" id="search-product" placeholder="Search Products" onkeyup="filterProductAverage()">
+                </form>
+            </div>
+
             <div id="avg-div">
-                <ul>
+                <ul id="my-list">
                     {% for product in product_avg_prices %}
-                        <li>
+                        <li class="actual-product">
                             <img src="{{ product.product|product_image }}" alt="product-image">
-                            <span>{{ product.product|product_name }}</span>
+                            <span class="my-product-heading">{{ product.product|product_name }}</span>
                             <span><strong>$ {{ product.avg_money }}</strong></span>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
+
+        <!-- GET FEWEST PRODUCT -->
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            <div class="text-center">
+                <p id="fewest-product">
+                    <img src="{{ fewest_product.image.url }}" alt="product-image">
+                    <span>{{ fewest_product.name }}</span>
+                    <span><i>Remaining Quantity:</i> &nbsp; <strong>{{ fewest_product.quantity }}</strong></span>
+                </p>
+            </div>
+        </div>
+
+        <!-- GET MOST POPULAR PRODUCT -->
+        <div class="tab-pane fade" id="nav-popular" role="tabpanel" aria-labelledby="nav-popular-tab" tabindex="0">
+            <div class="text-center">
+                <p id="most-popular-product">
+                    <img src="{{ most_popular_product.product|product_image }}" alt="product-image">
+                    <span>{{ most_popular_product.product|product_name }}</span>
+                    <span><i>Bought Quantity:</i> &nbsp;<strong>{{ most_popular_product.total_quantity }}</strong></span>
+                </p>
+            </div>
+        </div>
+
     </div>
 {% endblock content %}
 
