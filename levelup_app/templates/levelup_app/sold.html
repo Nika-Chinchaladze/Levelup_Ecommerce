@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Sold Product Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/sold.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <h3 class="text-center mt-5 mb-4">Sold Products Page</h3>
+    <hr>
+    <div class="sold-div">
+        <ul>
+            {% for item in sold_products %}
+                <li>
+                    <img src="{{ item.product.image.url }}" alt="product-image">
+                    <span>{{ item.product.name }}</span>
+                    <span>{{ item.quantity }}</span>
+                    <span><strong>$ {{ item.money_gained|floatformat:2 }}</strong></span>
+                    <span>{{ item.date_sold }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

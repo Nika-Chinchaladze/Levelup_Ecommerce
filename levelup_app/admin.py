@@ -18,7 +18,8 @@ class UserImageAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "price", "quantity", "image",)
+    list_display = ("name", "price", "quantity",
+                    "image", "in_sale", "provider",)
 
 
 class SavedProductAdmin(admin.ModelAdmin):

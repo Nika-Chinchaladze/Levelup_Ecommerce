@@ -1,6 +1,8 @@
 from django import template
 from levelup_app.models import Product
 
+from levelup_app.models import PurchasedProduct, Product
+
 register = template.Library()
 
 
@@ -29,3 +31,9 @@ def product_name(value):
 def product_image(value):
     chosen_product = Product.objects.get(id=int(value))
     return chosen_product.image.url
+
+
+@register.filter(name="provider")
+def provider(value):
+    chosen_product = Product.objects.get(id=int(value))
+    return chosen_product.provider

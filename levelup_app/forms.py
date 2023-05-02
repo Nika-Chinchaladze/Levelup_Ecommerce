@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import UserImage, UserCreditCard, PurchasedProduct
+from .models import UserImage, UserCreditCard, PurchasedProduct, Product
 
 
 class LoginForm(forms.Form):
@@ -99,3 +99,19 @@ class PurchasePtoductForm(forms.ModelForm):
 
         self.fields["quantity"].widget.attrs["placeholder"] = "Quantity"
         self.fields["quantity"].widget.attrs["class"] = "form-control"
+
+
+class AddNewProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ("name", "price", "quantity", "image", "in_sale",)
+
+    def __init__(self, *args, **kwargs):
+        super(AddNewProductForm, self).__init__(*args, **kwargs)
+
+        self.fields["name"].widget.attrs["placeholder"] = "Product name"
+
+        self.fields["name"].widget.attrs["class"] = "form-control"
+        self.fields["price"].widget.attrs["class"] = "form-control"
+        self.fields["quantity"].widget.attrs["class"] = "form-control"
+        self.fields["image"].widget.attrs["class"] = "form-control"

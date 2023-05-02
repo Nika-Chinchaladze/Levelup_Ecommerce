@@ -23,6 +23,8 @@
                     <th>Quantity</th>
                     <th>Spent Money</th>
                     <th>Purchased Time</th>
+                    <th>Product Provider</th>
+                    <th>Add To Own Products</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +35,8 @@
                         <td>{{ item.quantity }}</td>
                         <td>$&nbsp;<span class="money_spent">{{ item.money_spent|floatformat:2 }}</span></td>
                         <td>{{ item.date_purchased }}</td>
+                        <td>{{ item.product.provider.username }}</td>
+                        <td><a href="{% url 'add-into-own' pk=item.product.id num=item.quantity %}" class="btn btn-primary add-button">add +</a></td>
                     </tr>
                 {% endfor %}
                 <tr>
@@ -40,6 +44,8 @@
                     <td></td>
                     <td></td>
                     <td class="fw-bold">Total Spending:&nbsp;&nbsp; $&nbsp;<span id="total-spent"></span></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                 </tr>
             </tbody>

@@ -5,4 +5,4 @@ for (var i = 0; i < spent_moneys.length; i++) {
     total_spending += parseFloat(spent_moneys[i].textContent);
 }
 
-document.getElementById("total-spent").textContent = total_spending;
+document.getElementById("total-spent").textContent = total_spending.toFixed(2);

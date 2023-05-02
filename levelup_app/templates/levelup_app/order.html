@@ -49,7 +49,11 @@
                     <td>{{ user.usercreditcard.name_on_card }}</td>
                     <td>{{ user.usercreditcard.card_number|last_four }}</td>
                     <td>{{ user.usercreditcard.expire_date }}</td>
-                    <td>$ <span id="current-balance">{{ user.usercreditcard.creditcardmoney.money|floatformat:2 }}</span></td>
+                    {% if user.usercreditcard.creditcardmoney.money %}
+                        <td>$ <span id="current-balance">{{ user.usercreditcard.creditcardmoney.money|floatformat:2 }}</span></td>
+                    {% else %}
+                        <td>$ <span id="current-balance">0</span></td>
+                    {% endif %}
                 </tbody>
             </table>
         {% endif %}

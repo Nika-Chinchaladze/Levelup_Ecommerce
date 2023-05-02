@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Own Product's Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/own.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <h3 class="text-center mt-5 mb-4">My Own Products Page</h3>
+    <hr>
+    <!-- PRODUCTS ADDED BY PROVIDER -->
+    <div class="own-div">
+        <ul>
+            {% for product in own_products %}
+                <li>
+                    <img src="{{ product.image.url }}" alt="product-image">
+                    <span>{{ product.name }}</span>
+                    <span>{{ product.quantity }}</span>
+                    {% if product.in_sale %}
+                        <a class="btn btn-danger" href="{% url 'remove-from-sale' pk=product.id %}">Remove From Sale <i class="bi bi-trash-fill"></i></a>
+                    {% else %}
+                        <a class="btn btn-success" href="{% url 'add-into-sale' pk=product.id %}">Add In Sale <i class="bi bi-patch-plus"></i></a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

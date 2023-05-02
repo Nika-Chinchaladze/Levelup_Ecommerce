@@ -16,7 +16,7 @@ class UserCreditCard(models.Model):
 
 
 class CreditCardMoney(models.Model):
-    money = models.FloatField()
+    money = models.FloatField(default=0)
     credit_card = models.OneToOneField(
         UserCreditCard, on_delete=models.CASCADE, null=True)
 
@@ -38,9 +38,11 @@ class Product(models.Model):
     price = models.FloatField(default=0)
     quantity = models.IntegerField(default=1)
     image = models.ImageField(upload_to="images")
+    in_sale = models.BooleanField(default=False)
+    provider = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.name} {self.price} {self.quantity}"
+        return f"{self.name} {self.price} {self.quantity} {self.in_sale} {self.provider}"
 
 
 class SavedProduct(models.Model):
@@ -60,4 +62,16 @@ class PurchasedProduct(models.Model):
     money_spent = models.FloatField()
 
     def __str__(self):
-        return f"{self.product} {self.user} {self.date_purchased} {self.quantity} {self.money_spent}"
+        return f"{self.product.name} {self.user} {self.date_purchased} {self.quantity} {self.money_spent}"
+
+
+class SoldProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    product_provider = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True)
+    date_sold = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField()
+    money_gained = models.FloatField()
+
+    def __str__(self):
+        return f"{self.product} {self.product_provider} {self.customer} {self.date_sold} {self.quantity} {self.money_gained}"

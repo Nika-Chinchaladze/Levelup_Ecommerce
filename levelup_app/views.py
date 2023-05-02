@@ -5,10 +5,10 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.contrib.auth.models import User
-from django.db.models import Avg, Sum, Count
+from django.db.models import Sum, Count
 
-from .forms import LoginForm, RegisterForm, UserImageForm, UserCreditCardForm, PurchasePtoductForm
-from .models import Product, SavedProduct, UserCreditCard, PurchasedProduct
+from .forms import LoginForm, RegisterForm, UserImageForm, UserCreditCardForm, PurchasePtoductForm, AddNewProductForm
+from .models import Product, SavedProduct, UserCreditCard, PurchasedProduct, SoldProduct
 # Create your views here.
 
 
@@ -77,10 +77,68 @@ class HomeView(View):
             "user": request.user,
             "products": all_products.order_by("-quantity"),
             "product_avg_prices": PurchasedProduct.objects.values("product").annotate(avg_money=Sum("money_spent")/Sum("quantity")).all(),
+            "product_profit_prices": SoldProduct.objects.filter(product_provider=request.user).all(),
             "fewest_product": all_products.order_by("quantity")[0],
             "most_popular_product": PurchasedProduct.objects.values("product").annotate(total_quantity=Sum("quantity")).all().order_by("-total_quantity")[0]
         }
         return render(request, "levelup_app/home.html", context)
+
+
+class MyOwnProductView(View):
+    def get(self, request):
+        context = {
+            "user": request.user,
+            "own_products": Product.objects.filter(provider=request.user).all()
+        }
+        return render(request, "levelup_app/own.html", context)
+
+
+class AddIntoOwnProductView(View):
+    def get(self, request, pk, num):
+        chosen_product = Product.objects.get(id=pk)
+        new_product = Product(
+            name=chosen_product.name,
+            price=chosen_product.price,
+            quantity=num,
+            image=chosen_product.image,
+            in_sale=True,
+            provider=request.user
+        )
+        new_product.save()
+        return HttpResponseRedirect(reverse("home"))
+
+
+class RemoveFromSaleView(View):
+    def get(self, request, pk):
+        chosen_product = Product.objects.get(id=pk)
+        chosen_product.in_sale = False
+        chosen_product.save()
+        return HttpResponseRedirect(reverse("own"))
+
+
+class AddIntoSaleView(View):
+    def get(self, request, pk):
+        chosen_product = Product.objects.get(id=pk)
+        chosen_product.in_sale = True
+        chosen_product.save()
+        return HttpResponseRedirect(reverse("own"))
+
+
+class AddNewProductView(View):
+    def get(self, request):
+        context = {
+            "user": request.user,
+            "form": AddNewProductForm()
+        }
+        return render(request, "levelup_app/add.html", context)
+
+    def post(self, request):
+        form = AddNewProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form_instance = form.save(commit=False)
+            form_instance.provider = request.user
+            form_instance.save()
+            return HttpResponseRedirect(reverse("home"))
 
 
 class CreditCardView(View):
@@ -148,7 +206,7 @@ class SaveIntoCartView(View):
     def get(self, request, pk):
         chosen_product = Product.objects.get(id=pk)
         check_product = SavedProduct.objects.filter(
-            product=chosen_product).first()
+            product=chosen_product, user=request.user).first()
         if check_product is None:
             saved_product = SavedProduct(
                 product=Product.objects.get(id=pk),
@@ -192,6 +250,19 @@ class OrderProductView(View):
             customer_money = customer_user.usercreditcard.creditcardmoney
             customer_money.money -= float(request.POST["hidden_total_price"])
             customer_money.save()
+            # increase provide's balance on mastercard
+            provider_user = bougth_product.provider
+            provider_money = provider_user.usercreditcard.creditcardmoney
+            provider_money.money += float(request.POST["hidden_total_price"])
+            provider_money.save()
+            # add product into SoldProduct model
+            sold_product = SoldProduct(
+                product=bougth_product,
+                product_provider=provider_user,
+                quantity=int(form.cleaned_data["quantity"]),
+                money_gained=float(request.POST["hidden_total_price"])
+            )
+            sold_product.save()
             return HttpResponseRedirect(reverse("home"))
         else:
             context = {
@@ -209,3 +280,12 @@ class PurchasedProductsView(View):
             "products": PurchasedProduct.objects.filter(user=request.user).all()
         }
         return render(request, "levelup_app/purchased.html", context)
+
+
+class SoldProductView(View):
+    def get(self, request):
+        context = {
+            "user": request.user,
+            "sold_products": SoldProduct.objects.filter(product_provider=request.user).all()
+        }
+        return render(request, "levelup_app/sold.html", context)

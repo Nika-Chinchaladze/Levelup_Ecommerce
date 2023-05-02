@@ -14,15 +14,16 @@
     <h3 class="text-center mt-5 mb-4">All Products Page</h3>
     <div class="row text-center row-div">
         {% for product in products %}
-            <div class="product-div">
-                <img src="{{ product.image.url }}" alt="product-image">
-                
-                <p class="text-start m-0 mt-2 ps-2 pe-3">Name:&nbsp;&nbsp; <strong>{{ product.name }}</strong></p>
-                <p class="text-start m-0 ps-2 pe-3">Quantity:&nbsp;&nbsp; <strong>{{ product.quantity }}</strong></p>
-                <p class="text-start m-0 ps-2 pe-3">Price:&nbsp;&nbsp; <strong>${{ product.price|floatformat:2 }}</strong></p>
-                <a href="{% url 'detail' pk=product.id %}" class="btn btn-outline-success">View Product</a>
-                
-            </div>
+            {% if product.in_sale %}
+                <div class="product-div">
+                    <img src="{{ product.image.url }}" alt="product-image">
+                    <p class="text-start m-0 mt-2 ps-2 pe-3">Name:&nbsp;&nbsp; <strong>{{ product.name }}</strong></p>
+                    <p class="text-start m-0 ps-2 pe-3">Quantity:&nbsp;&nbsp; <strong>{{ product.quantity }}</strong></p>
+                    <p class="text-start m-0 ps-2 pe-3">Price:&nbsp;&nbsp; <strong>${{ product.price|floatformat:2 }}</strong></p>
+                    <p class="text-start m-0 ps-2 pe-3">Provider:&nbsp;&nbsp; <strong>{{ product.provider.first_name }} {{ product.provider.last_name }}</strong></p>
+                    <a href="{% url 'detail' pk=product.id %}" class="btn btn-outline-success">View Product</a>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock content %}

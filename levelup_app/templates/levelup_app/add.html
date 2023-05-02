@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title Block -->
+{% block title %}Add Product Page{% endblock title %}
+
+<!-- CSS Block -->
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'levelup_app/css/add.css' %}">
+{% endblock css_styles %}
+
+<!-- Main Content Block -->
+{% block content %}
+    <h3 class="text-center mt-5 mb-4">Add New Product Page</h3>
+    <hr>
+    <div id="add-div" class="text-center">
+        <form action="{% url 'add' %}" method="POST" enctype="multipart/form-data" class="text-start">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+{% endblock content %}

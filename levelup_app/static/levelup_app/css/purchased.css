@@ -30,3 +30,7 @@ tbody td img {
     height: 100px;
     border: 1px dashed #2f2f7ecb;
 }
+.add-button:active {
+    position: relative;
+    top: 2px;
+}
