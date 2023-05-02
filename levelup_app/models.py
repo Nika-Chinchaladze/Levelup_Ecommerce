@@ -74,4 +74,4 @@ class SoldProduct(models.Model):
     money_gained = models.FloatField()
 
     def __str__(self):
-        return f"{self.product} {self.product_provider} {self.customer} {self.date_sold} {self.quantity} {self.money_gained}"
+        return f"{self.product} {self.product_provider} {self.date_sold} {self.quantity} {self.money_gained}"

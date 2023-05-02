@@ -115,3 +115,8 @@ class AddNewProductForm(forms.ModelForm):
         self.fields["price"].widget.attrs["class"] = "form-control"
         self.fields["quantity"].widget.attrs["class"] = "form-control"
         self.fields["image"].widget.attrs["class"] = "form-control"
+
+
+class UpdateProductForm(forms.Form):
+    price = forms.FloatField(label="Price")
+    quantity = forms.IntegerField(label="Quantity")

@@ -3,7 +3,7 @@ body {
 }
 .own-div {
     box-sizing: border-box;
-    width: 50%;
+    width: 60%;
     margin: 30px auto;
 }
 .own-div ul {
@@ -28,4 +28,12 @@ body {
 .own-div ul li a {
     display: inline-block;
     width: 200px;
+}
+.update-link {
+    display: inline-block;
+    width: 40px!important;
+}
+.update-link:active {
+    position: relative;
+    top: 2px;
 }

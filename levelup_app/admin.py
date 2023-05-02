@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import UserImage, Product, SavedProduct, UserCreditCard, CreditCardMoney, PurchasedProduct
+from .models import UserImage, Product, SavedProduct, UserCreditCard, CreditCardMoney, PurchasedProduct, SoldProduct
 # Register your models here.
 
 
@@ -31,9 +31,15 @@ class PurchasedProductAdmin(admin.ModelAdmin):
                     "quantity", "money_spent",)
 
 
+class SoldProductAdmin(admin.ModelAdmin):
+    list_display = ("product", "product_provider",
+                    "date_sold", "quantity", "money_gained",)
+
+
 admin.site.register(UserCreditCard, UserCreditCardAdmin)
 admin.site.register(CreditCardMoney, CreditCardMoneyAdmin)
 admin.site.register(UserImage, UserImageAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(SavedProduct, SavedProductAdmin)
 admin.site.register(PurchasedProduct, PurchasedProductAdmin)
+admin.site.register(SoldProduct, SoldProductAdmin)

@@ -40,7 +40,7 @@ hr {
     margin-bottom: 70px;
 }
 .quantity-list li {
-    width: 350px;
+    width: 450px;
     padding: 30px 10px;
     margin: 20px auto;
     border-radius: 10px;
@@ -129,4 +129,58 @@ hr {
     height: 100px;
     border-radius: 10px;
     border: 1px dashed #636161c9;
+}
+.profit-div {
+    width: 60%;
+    margin: 50px auto;
+}
+.profit-div ul {
+    list-style: none;
+}
+.profit-div ul li {
+    border: 1px solid #4b4949d2;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profit-div ul li img {
+    width: 140px;
+    height: 110px;
+    border-radius: 8px;
+    border: 1px dashed #361414d8;
+}
+.profit-table {
+    width: 70%;
+    text-align: center;
+}
+.profit-table th,
+.profit-table td {
+    border: 1px solid #444343;
+}
+#nav-home-tab {
+    color: black!important;
+    border: 1px solid black!important;
+}
+#nav-profile-tab {
+    color: #310808!important;
+    border: 1px solid #310808!important;
+}
+#nav-profit-tab {
+    color: #11083b!important;
+    border: 1px solid #11083b!important;
+}
+#nav-contact-tab {
+    color: #04180f!important;
+    border: 1px solid #04180f!important;
+}
+#nav-popular-tab {
+    color: #4d0404!important;
+    border: 1px solid #4d0404!important;
+}
+#nav-tab, #tab-div {
+    text-align: center!important;
 }

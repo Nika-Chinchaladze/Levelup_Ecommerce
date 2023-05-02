@@ -1,7 +1,7 @@
 from django import template
 from levelup_app.models import Product
 
-from levelup_app.models import PurchasedProduct, Product
+from levelup_app.models import PurchasedProduct, Product, SoldProduct
 
 register = template.Library()
 

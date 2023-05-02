@@ -7,7 +7,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 
-from .forms import LoginForm, RegisterForm, UserImageForm, UserCreditCardForm, PurchasePtoductForm, AddNewProductForm
+from .forms import LoginForm, RegisterForm, UserImageForm, UserCreditCardForm, PurchasePtoductForm, AddNewProductForm, UpdateProductForm
 from .models import Product, SavedProduct, UserCreditCard, PurchasedProduct, SoldProduct
 # Create your views here.
 
@@ -73,13 +73,30 @@ class LogoutView(View):
 class HomeView(View):
     def get(self, request):
         all_products = Product.objects.all()
+        # fewest product
+        fewest_product = all_products.order_by("quantity")
+        fewest_product = fewest_product[0] if len(fewest_product) > 0 else None
+        # most popular product
+        most_popular_product = PurchasedProduct.objects.values("product").annotate(
+            total_quantity=Sum("quantity")).all().order_by("-total_quantity")
+        most_popular_product = most_popular_product[0] if len(
+            most_popular_product) else None
+        # sold product
+        sold_product = SoldProduct.objects.filter(
+            product_provider=request.user).all()
+        # product average price
+        product_avg_prices = PurchasedProduct.objects.values("product").annotate(
+            avg_money=Sum("money_spent")/Sum("quantity")).all()
+        # product profit price
+        product_profit_prices = sold_product.values("product").annotate(
+            profit_money=Sum("money_gained")/Sum("quantity")).all()
         context = {
             "user": request.user,
             "products": all_products.order_by("-quantity"),
-            "product_avg_prices": PurchasedProduct.objects.values("product").annotate(avg_money=Sum("money_spent")/Sum("quantity")).all(),
-            "product_profit_prices": SoldProduct.objects.filter(product_provider=request.user).all(),
-            "fewest_product": all_products.order_by("quantity")[0],
-            "most_popular_product": PurchasedProduct.objects.values("product").annotate(total_quantity=Sum("quantity")).all().order_by("-total_quantity")[0]
+            "product_avg_prices": product_avg_prices,
+            "product_profit_prices": product_profit_prices,
+            "fewest_product": fewest_product,
+            "most_popular_product": most_popular_product
         }
         return render(request, "levelup_app/home.html", context)
 
@@ -93,19 +110,22 @@ class MyOwnProductView(View):
         return render(request, "levelup_app/own.html", context)
 
 
-class AddIntoOwnProductView(View):
-    def get(self, request, pk, num):
+class UpdateOwnProductView(View):
+    def get(self, request, pk):
+        context = {
+            "form": UpdateProductForm(),
+            "chosen_product": Product.objects.get(id=pk)
+        }
+        return render(request, "levelup_app/update.html", context)
+
+    def post(self, request, pk):
         chosen_product = Product.objects.get(id=pk)
-        new_product = Product(
-            name=chosen_product.name,
-            price=chosen_product.price,
-            quantity=num,
-            image=chosen_product.image,
-            in_sale=True,
-            provider=request.user
-        )
-        new_product.save()
-        return HttpResponseRedirect(reverse("home"))
+        form = UpdateProductForm(request.POST)
+        if form.is_valid():
+            chosen_product.price = form.cleaned_data["price"]
+            chosen_product.quantity = form.cleaned_data["quantity"]
+            chosen_product.save()
+            return HttpResponseRedirect(reverse("own"))
 
 
 class RemoveFromSaleView(View):

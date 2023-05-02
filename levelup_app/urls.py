@@ -9,8 +9,6 @@ urlpatterns = [
     path("logout", views.LogoutView.as_view(), name="logout"),
     path("home", views.HomeView.as_view(), name="home"),
     path("own", views.MyOwnProductView.as_view(), name="own"),
-    path("add-into-own/<int:pk>/<int:num>",
-         views.AddIntoOwnProductView.as_view(), name="add-into-own"),
     path("remove-from-sale/<int:pk>", views.RemoveFromSaleView.as_view(),
          name="remove-from-sale"),
     path("add-into-sale/<int:pk>",
@@ -26,5 +24,6 @@ urlpatterns = [
          views.SaveIntoCartView.as_view(), name="save-in-cart"),
     path("remove-from-cart/<int:pk>",
          views.RemoveFromCartView.as_view(), name="remove-from-cart"),
-    path("order/<int:pk>", views.OrderProductView.as_view(), name="order")
+    path("order/<int:pk>", views.OrderProductView.as_view(), name="order"),
+    path("update/<int:pk>", views.UpdateOwnProductView.as_view(), name="update")
 ]

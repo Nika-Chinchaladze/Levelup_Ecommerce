@@ -1,0 +1,18 @@
+body {
+    background-color: #d6ece5;
+}
+.update-div {
+    box-sizing: border-box;
+    width: 50%;
+    margin: 50px auto;
+    padding: 10px 15px;
+}
+.update-div form input {
+    border: 1px solid #4b4a4a;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.update-div form label {
+    text-align: left;
+    width: 100px;
+}
